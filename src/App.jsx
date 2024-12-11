@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import AddTask from "./componets/AddTask";
 import Task from "./componets/Task";
 
@@ -10,30 +11,6 @@ function App() {
       description: "Caminho para se tornar um DevFulStacK",
       isCompleted: false,
     },
-    {
-      id: "3",
-      title: "Ler um livro",
-      description: "Explorar novos mundos e aprender coisas novas.",
-      isCompleted: false,
-    },
-    {
-      id: "4",
-      title: "Fazer o almoço",
-      description: "Preparar uma refeição saudável e saborosa.",
-      isCompleted: false,
-    },
-    {
-      id: "5",
-      title: "Pagar as contas",
-      description: "Manter as finanças em dia.",
-      isCompleted: false,
-    },
-    {
-      id: "6",
-      title: "Ligar para Marcos",
-      description: "Marcar um encontro para bater um papo.",
-      isCompleted: false,
-    },
   ]);
 
   function onTaskClick(TaskId) {
@@ -42,13 +19,24 @@ function App() {
       return task;
     });
     setTasks(newTasks);
-    console.log(newTasks);
+    console.log('onTaskClick');
   }
 
   function onTaskDelete(TaskId) {
     const newTasks = tasks.filter((task) => task.id != TaskId);
     setTasks(newTasks);
-    console.log(newTasks);
+    console.log('onTaskDelete');
+  }
+
+  function addTask({title, description}) {
+    const newTask = {
+      id: uuidv4(),
+      title,
+      description,
+      isCompleted: false,
+    };
+    console.log('addTask');
+    setTasks([...tasks, newTask]);
   }
 
   return (
@@ -57,7 +45,7 @@ function App() {
         <h1 className="text-3xl text-slate-100 font-bold text-center p-1">
           Gerenciador de Tarefas
         </h1>
-        <AddTask />
+        <AddTask addTask={addTask} />
         <Task
           tasks={tasks}
           onTaskClick={onTaskClick}
