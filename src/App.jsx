@@ -17,16 +17,6 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // useEffect(() => {/
-    // console.log("Tasks: ", tasks);
-    // CHAMAR API SE NECESSARIO
-    // async function fetch() {
-    //   let data = await fetch();
-    // }
-    // Executada uma vez ao abrir o app
-    // console.log("Executada uma vez ao abrir o app");
-  // }, []);
-
   function onTaskClick(TaskId) {
     const newTasks = tasks.map((task) => {
       if (TaskId == task.id) return { ...task, isCompleted: !task.isCompleted };
