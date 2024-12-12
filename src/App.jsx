@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AddTask from "./componets/AddTask";
 import Task from "./componets/Task";
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: "1",
-      title: "Estudar programação!",
-      description: "Caminho para se tornar um DevFulStacK",
-      isCompleted: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem("tasks")));
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks)) || [];
+  }, [tasks]);
+
+  // useEffect(() => {
+  //   CHAMAR API SE NECESSARIO
+  //   async function fetch() {
+  //     let data = await fetch(); 
+  //   }
+  //   Executada uma vez ao abrir o app
+  //   console.log("Executada uma vez ao abrir o app");
+  // }, []);
 
   function onTaskClick(TaskId) {
     const newTasks = tasks.map((task) => {
@@ -19,23 +25,23 @@ function App() {
       return task;
     });
     setTasks(newTasks);
-    console.log('onTaskClick');
+    console.log("onTaskClick");
   }
 
   function onTaskDelete(TaskId) {
     const newTasks = tasks.filter((task) => task.id != TaskId);
     setTasks(newTasks);
-    console.log('onTaskDelete');
+    console.log("onTaskDelete");
   }
 
-  function addTask({title, description}) {
+  function addTask({ title, description }) {
     const newTask = {
       id: uuidv4(),
       title,
       description,
       isCompleted: false,
     };
-    console.log('addTask');
+    console.log("addTask");
     setTasks([...tasks, newTask]);
   }
 
@@ -46,11 +52,13 @@ function App() {
           Gerenciador de Tarefas
         </h1>
         <AddTask addTask={addTask} />
-        <Task
-          tasks={tasks}
-          onTaskClick={onTaskClick}
-          onTaskDelete={onTaskDelete}
-        />
+        {tasks.length > 0 && (
+          <Task
+            tasks={tasks}
+            onTaskClick={onTaskClick}
+            onTaskDelete={onTaskDelete}
+          />
+        )}
       </div>
     </div>
   );

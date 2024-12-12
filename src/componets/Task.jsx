@@ -1,6 +1,16 @@
 import { ChevronRightIcon, Trash } from "lucide-react";
-/* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 function Task({ tasks, onTaskClick, onTaskDelete }) {
+  const navigate = useNavigate();
+
+  function onSeeDetailClick(task) {
+    const query = new URLSearchParams();
+    query.set("title", task.title);
+    query.set("description", task.description);
+    navigate(`/details?${query.toString()}`);
+  }
+
   return (
     <ul className="space-y-4 p-6 bg-slate-200 rounded-b-md shadow">
       {tasks.map((task) => (
@@ -13,15 +23,14 @@ function Task({ tasks, onTaskClick, onTaskDelete }) {
           >
             {task.title}
           </button>
-          <button
-            className="bg-slate-400 p-2 rounded-md text-white"
-            onClick={() => onTaskDelete(task.id)}
-          >
+
+          <Button onClick={() => onTaskDelete(task.id)}>
             <Trash />
-          </button>
-          <button className="bg-slate-400 p-2 rounded-md text-white">
+          </Button>
+
+          <Button onClick={() => onSeeDetailClick(task)}>
             <ChevronRightIcon />
-          </button>
+          </Button>
         </li>
       ))}
     </ul>
