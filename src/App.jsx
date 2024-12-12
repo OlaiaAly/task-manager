@@ -4,19 +4,27 @@ import AddTask from "./componets/AddTask";
 import Task from "./componets/Task";
 
 function App() {
-  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem("tasks")));
-
+  const [tasks, setTasks] = useState(() => {
+    const storedTasks = localStorage.getItem("tasks");
+    try {
+      return storedTasks ? JSON.parse(storedTasks) : [];
+    } catch (error) {
+      console.error("Erro ao carregar tarefas do localStorage:", error);
+      return []; // Retorna um array vazio em caso de erro
+    }
+  });
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks)) || [];
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // useEffect(() => {
-  //   CHAMAR API SE NECESSARIO
-  //   async function fetch() {
-  //     let data = await fetch();
-  //   }
-  //   Executada uma vez ao abrir o app
-  //   console.log("Executada uma vez ao abrir o app");
+  // useEffect(() => {/
+    // console.log("Tasks: ", tasks);
+    // CHAMAR API SE NECESSARIO
+    // async function fetch() {
+    //   let data = await fetch();
+    // }
+    // Executada uma vez ao abrir o app
+    // console.log("Executada uma vez ao abrir o app");
   // }, []);
 
   function onTaskClick(TaskId) {
