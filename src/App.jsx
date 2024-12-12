@@ -12,10 +12,10 @@ function App() {
       console.error("Erro ao carregar tarefas do localStorage:", error);
       return []; // Retorna um array vazio em caso de erro
     }
-  })
+  });
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks])
+  }, [tasks]);
 
   function onTaskClick(TaskId) {
     const newTasks = tasks.map((task) => {
@@ -28,8 +28,8 @@ function App() {
 
   function onTaskDelete(TaskId) {
     const newTasks = tasks.filter((task) => task.id != TaskId);
-    setTasks(newTasks)
-    console.log("onTaskDelete")
+    setTasks(newTasks);
+    console.log("onTaskDelete");
   }
 
   function addTask({ title, description }) {
@@ -39,8 +39,7 @@ function App() {
       description,
       isCompleted: false,
     };
-    console.log("addTask")
-    setTasks([...tasks, newTask])
+    setTasks([...tasks, newTask]);
   }
 
   return (
