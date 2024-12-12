@@ -13,7 +13,7 @@ function App() {
   // useEffect(() => {
   //   CHAMAR API SE NECESSARIO
   //   async function fetch() {
-  //     let data = await fetch(); 
+  //     let data = await fetch();
   //   }
   //   Executada uma vez ao abrir o app
   //   console.log("Executada uma vez ao abrir o app");
@@ -52,7 +52,7 @@ function App() {
           Gerenciador de Tarefas
         </h1>
         <AddTask addTask={addTask} />
-        {tasks.length > 0 && (
+        {tasks && tasks.length > 0 && (
           <Task
             tasks={tasks}
             onTaskClick={onTaskClick}
