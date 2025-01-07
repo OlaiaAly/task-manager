@@ -8,6 +8,7 @@ function Task({ tasks, onTaskClick, onTaskDelete }) {
     const query = new URLSearchParams();
     query.set("title", task.title);
     query.set("description", task.description);
+    query.set("date", task.date);
     navigate(`/details?${query.toString()}`);
   }
 
@@ -17,10 +18,13 @@ function Task({ tasks, onTaskClick, onTaskDelete }) {
         <li key={task.id} className="flex gap-2">
           <button
             onClick={() => onTaskClick(task.id)}
-            className={`w-full text-left bg-slate-400 text-white p-2 rounded-md ${
+            className={`relative truncate w-full text-left bg-slate-400 text-white px-2 py-3 mt-0 rounded-md ${
               task.isCompleted && "line-through"
             }`}
           >
+            <div className="absolute top-0 right-0">
+              <small className="m-1 pr-0 pt-0 text-xs">{task.date ?? ""}</small>
+            </div>
             {task.title}
           </button>
 

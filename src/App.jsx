@@ -32,9 +32,10 @@ function App() {
     console.log("onTaskDelete");
   }
 
-  function addTask({ title, description }) {
+  function addTask({ title, description, date }) {
     const newTask = {
       id: uuidv4(),
+      date,
       title,
       description,
       isCompleted: false,

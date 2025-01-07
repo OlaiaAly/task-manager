@@ -9,6 +9,7 @@ function AddTask({ addTask }) {
       <Input
         type="text"
         value={title}
+        maxlength="40"
         onChange={(event) => setTitle(event.target.value)}
         placeholder="Digite o titulo da tarefa."
       />
@@ -24,7 +25,11 @@ function AddTask({ addTask }) {
           if (!title.trim() || !description.trim()) {
             return alert("Campos vazios não podem ser adicionados.");
           }
-          addTask({ title, description });
+          const data = new Date();
+          const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+          const date = data.toLocaleDateString("pt-BR", options);
+          console.log(date);
+          addTask({ title, description, date });
           setTitle("");
           setDescription("");
         }}

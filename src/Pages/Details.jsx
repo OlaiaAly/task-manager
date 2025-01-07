@@ -6,6 +6,7 @@ function Details() {
   const [searchParams] = useSearchParams();
   const title = searchParams.get("title");
   const description = searchParams.get("description");
+  const date = searchParams.get("date");
 
   return (
     <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
@@ -18,7 +19,10 @@ function Details() {
             Detalhes da Tarefa
           </h1>
         </div>
-        <div className="bg-slate-200 p-4 rounded-md">
+        <div className="bg-slate-200 p-4 rounded-md relative">
+          <div className="absolute top-0 right-0">
+            <small className="m-1 pr-0 pt-0">{date}</small>
+          </div>
           <h1 className="text-xl font-bold text-slate-600"> {title} </h1>
           <p className="text-slate-600"> {description} </p>
         </div>
