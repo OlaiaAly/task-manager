@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AddTask from "./componets/AddTask";
 import Task from "./componets/Task";
+import Button from "./componets/Button";
+import { Link } from "react-router-dom";
 
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -57,6 +59,11 @@ function App() {
             onTaskDelete={onTaskDelete}
           />
         )}
+        <div className="text-center">
+          <Link to="/login">
+            <Button>Logout</Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
