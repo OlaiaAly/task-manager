@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
-function AddTask({ addTask }) {
+function AddTask({ addTask, setErrorMessage }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -22,13 +22,13 @@ function AddTask({ addTask }) {
 
       <button
         onClick={() => {
-          if (!title.trim() || !description.trim()) {
-            return alert("Campos vazios não podem ser adicionados.");
-          }
           const data = new Date();
           const options = { day: "2-digit", month: "2-digit", year: "numeric" };
           const date = data.toLocaleDateString("pt-BR", options);
-          console.log(date);
+          if (!title || !description || !date) {
+            setErrorMessage("Todos os campos são obrigatórios.");
+            return; // Stop adding the task
+          }
           addTask({ title, description, date });
           setTitle("");
           setDescription("");

@@ -12,12 +12,14 @@ function App() {
       return storedTasks ? JSON.parse(storedTasks) : [];
     } catch (error) {
       console.error("Erro ao carregar tarefas do localStorage:", error);
-      return []; // Retorna um array vazio em caso de erro
+      return [];
     }
   });
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
 
   function onTaskClick(TaskId) {
     const newTasks = tasks.map((task) => {
@@ -25,13 +27,11 @@ function App() {
       return task;
     });
     setTasks(newTasks);
-    console.log("onTaskClick");
   }
 
   function onTaskDelete(TaskId) {
     const newTasks = tasks.filter((task) => task.id != TaskId);
     setTasks(newTasks);
-    console.log("onTaskDelete");
   }
 
   function addTask({ title, description, date }) {
@@ -43,6 +43,7 @@ function App() {
       isCompleted: false,
     };
     setTasks([...tasks, newTask]);
+    setErrorMessage(""); // Clear the error message if task is added successfully.
   }
 
   return (
@@ -51,7 +52,11 @@ function App() {
         <h1 className="text-3xl text-slate-100 font-bold text-center p-1">
           Gerenciador de Tarefas
         </h1>
-        <AddTask addTask={addTask} />
+        {errorMessage && ( // Conditionally render the error message
+          <div className="text-red-500 text-center">{errorMessage}</div>
+        )}
+        <AddTask addTask={addTask} setErrorMessage={setErrorMessage} />{" "}
+        {/* Pass the potentially updated addTask */}
         {tasks && tasks.length > 0 && (
           <Task
             tasks={tasks}
@@ -68,4 +73,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
